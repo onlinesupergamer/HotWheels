@@ -5,19 +5,19 @@ using UnityEngine;
 
 public class Drive : MonoBehaviour
 {
-     public Vector2 controlInput;
-     public Rigidbody rb;
-     public Transform[] tires;
-     public Transform[] frontTires;
-     public Transform[] rearTires;
-     public float rayDistance;
-     public float springStrength;
-     public float springDamper;
-     public float restDistance;
-     public float tireGrip;
-     public float tireMass;
-     public float speedMultiplier;
-
+    public Vector2 controlInput;
+    public Rigidbody rb;
+    public Transform[] tires;
+    public Transform[] frontTires;
+    public Transform[] rearTires;
+    public float rayDistance;
+    public float springStrength;
+    public float springDamper;
+    public float restDistance;
+    public float tireGrip;
+    public float tireMass;
+    public float speedMultiplier;
+    public bool bisGrounded;
 
 
 
@@ -60,7 +60,12 @@ public class Drive : MonoBehaviour
                 float velocity = Vector3.Dot(springDir, tireWorldVelocity);
                 float force = (offset * springStrength) - (velocity * springDamper);
                 rb.AddForceAtPosition(springDir * force, tire.transform.position);
+                bisGrounded = true;
 
+            }
+            else
+            {
+                bisGrounded = false;
             }
             
             
