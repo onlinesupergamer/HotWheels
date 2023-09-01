@@ -277,12 +277,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 3a5cb6812f4c48845962b8de57307d78,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.18
+      value: -0.24
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a5cb6812f4c48845962b8de57307d78,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.64
+      value: -12.69
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a5cb6812f4c48845962b8de57307d78,
         type: 3}
@@ -470,6 +470,8 @@ MonoBehaviour:
   - {fileID: 6510705909180602633}
   rayDistance: 0.45
   springStrength: 2000
-  springDamper: 150
+  springDamper: 100
   restDistance: 0.55
-  tireGrip: 1
+  tireGrip: 0.25
+  tireMass: 7
+  speedMultiplier: 5

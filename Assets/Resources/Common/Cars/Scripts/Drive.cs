@@ -16,12 +16,15 @@ public class Drive : MonoBehaviour
      public float restDistance;
      public float tireGrip;
      public float tireMass;
+     public float speedMultiplier;
+
 
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        
 
     }
 
@@ -87,8 +90,6 @@ public class Drive : MonoBehaviour
 
                 rb.AddForceAtPosition(steeringDir * tireMass * desiredAcceleration, tire.transform.position);
 
-
-
             }
         }
     }
@@ -122,7 +123,7 @@ public class Drive : MonoBehaviour
                     float currentSpeed = Vector3.Dot(rb.transform.forward, rb.velocity);
                     float normalizedSpeed = Mathf.Clamp01(Mathf.Abs(currentSpeed) / 100); //This is divided by top speed;
 
-                    float torque = controlInput[1] * 7;
+                    float torque = controlInput[1] * speedMultiplier;
 
                     rb.AddForceAtPosition(accelerationDir * torque, tire.transform.position, ForceMode.Acceleration);
 
@@ -132,22 +133,15 @@ public class Drive : MonoBehaviour
                     float currentSpeed = Vector3.Dot(rb.transform.forward, rb.velocity);
                     float normalizedSpeed = Mathf.Clamp01(Mathf.Abs(currentSpeed) / 100); //This is divided by top speed;
 
-                    float torque = controlInput[1] * 7;
+                    float torque = controlInput[1] * speedMultiplier;
 
                     rb.AddForceAtPosition(accelerationDir * torque, tire.transform.position, ForceMode.Acceleration);
 
-
-
                 }
-
 
             }
         }
     }
-
-
-
-
 
 }
 
