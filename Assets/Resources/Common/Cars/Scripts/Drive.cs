@@ -18,6 +18,7 @@ public class Drive : MonoBehaviour
     public float tireMass;
     public float speedMultiplier;
     public bool bisGrounded;
+    public float turnAmount;
 
 
 
@@ -27,8 +28,6 @@ public class Drive : MonoBehaviour
         
 
     }
-
-
 
     void FixedUpdate()
     {
@@ -103,7 +102,7 @@ public class Drive : MonoBehaviour
     {
         foreach(Transform tire in frontTires)
         {
-            tire.localRotation = Quaternion.Euler(tire.transform.rotation.x, 45 * controlInput[0], tire.transform.rotation.z);
+            tire.localRotation = Quaternion.Euler(tire.transform.rotation.x, turnAmount * controlInput[0], tire.transform.rotation.z);
         }
 
         
