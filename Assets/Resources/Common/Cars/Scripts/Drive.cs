@@ -151,7 +151,7 @@ public class Drive : MonoBehaviour
             float rawSpeed = Mathf.InverseLerp(-18, 18, speed);
             float convertedSpeed = Mathf.Lerp(0, 1, rawSpeed);
 
-            float clampedConvertedSpeed = Mathf.Clamp01(Mathf.Abs(convertedSpeed * 3));
+            float clampedConvertedSpeed = Mathf.Clamp01(Mathf.Abs(convertedSpeed * 4));
             float affectedSteering = turningCurve.Evaluate(convertedSpeed);
             
             

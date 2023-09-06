@@ -2164,6 +2164,66 @@ PrefabInstance:
       propertyPath: m_Name
       value: RivitedBody_U
       objectReference: {fileID: 0}
+    - target: {fileID: 2297967134580201140, guid: 5aed42d7ad180b546ab2994fa27ad99d,
+        type: 3}
+      propertyPath: turningCurve.m_Curve.Array.data[3].time
+      value: 0.80211496
+      objectReference: {fileID: 0}
+    - target: {fileID: 2297967134580201140, guid: 5aed42d7ad180b546ab2994fa27ad99d,
+        type: 3}
+      propertyPath: turningCurve.m_Curve.Array.data[4].time
+      value: 0.9464145
+      objectReference: {fileID: 0}
+    - target: {fileID: 2297967134580201140, guid: 5aed42d7ad180b546ab2994fa27ad99d,
+        type: 3}
+      propertyPath: turningCurve.m_Curve.Array.data[5].time
+      value: 1.0120404
+      objectReference: {fileID: 0}
+    - target: {fileID: 2297967134580201140, guid: 5aed42d7ad180b546ab2994fa27ad99d,
+        type: 3}
+      propertyPath: turningCurve.m_Curve.Array.data[3].value
+      value: 0.34097785
+      objectReference: {fileID: 0}
+    - target: {fileID: 2297967134580201140, guid: 5aed42d7ad180b546ab2994fa27ad99d,
+        type: 3}
+      propertyPath: turningCurve.m_Curve.Array.data[4].value
+      value: 0.19334193
+      objectReference: {fileID: 0}
+    - target: {fileID: 2297967134580201140, guid: 5aed42d7ad180b546ab2994fa27ad99d,
+        type: 3}
+      propertyPath: turningCurve.m_Curve.Array.data[5].value
+      value: 0.15968822
+      objectReference: {fileID: 0}
+    - target: {fileID: 2297967134580201140, guid: 5aed42d7ad180b546ab2994fa27ad99d,
+        type: 3}
+      propertyPath: turningCurve.m_Curve.Array.data[4].inSlope
+      value: -0.510253
+      objectReference: {fileID: 0}
+    - target: {fileID: 2297967134580201140, guid: 5aed42d7ad180b546ab2994fa27ad99d,
+        type: 3}
+      propertyPath: turningCurve.m_Curve.Array.data[5].inSlope
+      value: -0.9809694
+      objectReference: {fileID: 0}
+    - target: {fileID: 2297967134580201140, guid: 5aed42d7ad180b546ab2994fa27ad99d,
+        type: 3}
+      propertyPath: turningCurve.m_Curve.Array.data[4].inWeight
+      value: 0.500583
+      objectReference: {fileID: 0}
+    - target: {fileID: 2297967134580201140, guid: 5aed42d7ad180b546ab2994fa27ad99d,
+        type: 3}
+      propertyPath: turningCurve.m_Curve.Array.data[4].outSlope
+      value: -0.510253
+      objectReference: {fileID: 0}
+    - target: {fileID: 2297967134580201140, guid: 5aed42d7ad180b546ab2994fa27ad99d,
+        type: 3}
+      propertyPath: turningCurve.m_Curve.Array.data[5].inWeight
+      value: 0.9543251
+      objectReference: {fileID: 0}
+    - target: {fileID: 2297967134580201140, guid: 5aed42d7ad180b546ab2994fa27ad99d,
+        type: 3}
+      propertyPath: turningCurve.m_Curve.Array.data[5].outSlope
+      value: -0.9809694
+      objectReference: {fileID: 0}
     - target: {fileID: 8696653575127848489, guid: 5aed42d7ad180b546ab2994fa27ad99d,
         type: 3}
       propertyPath: m_ProvidesContacts
