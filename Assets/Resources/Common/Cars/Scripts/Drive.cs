@@ -24,6 +24,7 @@ public class Drive : MonoBehaviour
     public bool bisGrounded;
     public float turnAmount;
     float steeringAmount;
+    RaycastHit hit;
 
 
 
@@ -56,7 +57,7 @@ public class Drive : MonoBehaviour
                 return;
 
 
-            RaycastHit hit;
+            
 
             if(Physics.Raycast(tire.transform.position, -transform.up, out hit, rayDistance))
             {
@@ -92,7 +93,7 @@ public class Drive : MonoBehaviour
             if(tire == null)
                 return;
 
-            RaycastHit hit;
+            
 
             if(Physics.Raycast(tire.transform.position, -transform.up, out hit, rayDistance))
             {
@@ -111,15 +112,19 @@ public class Drive : MonoBehaviour
                 float desiredVelocityChange = -steeringVelocity * tireGrip;
                 //Debug.Log(steeringVelocity);
 
+
+                //This method seems scuffed, but it works
                 if(steeringVelocity < -3f)
                 {
-                    Debug.Log("Sliding Right");
+                    //Debug.Log("Sliding Right");
                 }
 
                 if(steeringVelocity > 3f)
                 {
-                    Debug.Log("Sliding Left");
+                    //Debug.Log("Sliding Left");
                 }
+
+
 
                 float desiredAcceleration = desiredVelocityChange / Time.fixedDeltaTime;
                 //Debug.Log(frictionValue);
@@ -167,7 +172,7 @@ public class Drive : MonoBehaviour
             if(tire == null)
                 return;
 
-            RaycastHit hit;
+            
 
             if(Physics.Raycast(tire.transform.position, -transform.up, out hit, rayDistance))
             {
@@ -209,18 +214,20 @@ public class Drive : MonoBehaviour
         if(!bisGrounded)
         {
             rb.AddForce(-Vector3.up * 2200f);
+            
         }
         else
         {
-            rb.AddForce(-Vector3.up * 1800f);
+            rb.AddForce(-hit.normal * 1800f);
         }
 
     }
 
 
-    void MovementBuffer(Vector3 currentMovement, Vector3 bufferedMovement)
+    void MovementBuffer()
     {
-        Vector3 tmpbuffer;
+        Vector3 tmpbuffer = rb.velocity;
+
 
 
 
@@ -234,8 +241,6 @@ public class Drive : MonoBehaviour
 
 
     }
-
-
 
 
 }
