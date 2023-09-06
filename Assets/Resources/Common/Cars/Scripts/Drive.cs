@@ -40,6 +40,7 @@ public class Drive : MonoBehaviour
         controlInput[0] = Input.GetAxisRaw("Horizontal");
         controlInput[1] = Input.GetAxisRaw("Vertical");
 
+        Gravity();
         Suspension();
         Friction();
         Steer();
@@ -99,7 +100,6 @@ public class Drive : MonoBehaviour
                 Vector3 tireWorldVelocity = rb.GetPointVelocity(tire.transform.position);
                 float sideSpeed = Vector3.Dot(rb.transform.right, rb.velocity);
                 Mathf.Clamp01(sideSpeed);
-
                 float rawSpeed = Mathf.InverseLerp(-1, 1, sideSpeed);
                 float convertedSpeed = Mathf.Lerp(0, 1, rawSpeed);
 
@@ -109,6 +109,18 @@ public class Drive : MonoBehaviour
 
                 float steeringVelocity = Vector3.Dot(steeringDir, tireWorldVelocity);
                 float desiredVelocityChange = -steeringVelocity * tireGrip;
+                //Debug.Log(steeringVelocity);
+
+                if(steeringVelocity < -3f)
+                {
+                    Debug.Log("Sliding Right");
+                }
+
+                if(steeringVelocity > 3f)
+                {
+                    Debug.Log("Sliding Left");
+                }
+
                 float desiredAcceleration = desiredVelocityChange / Time.fixedDeltaTime;
                 //Debug.Log(frictionValue);
                 
@@ -196,13 +208,13 @@ public class Drive : MonoBehaviour
     {
         if(!bisGrounded)
         {
-
+            rb.AddForce(-Vector3.up * 2200f);
         }
         else
         {
-
+            rb.AddForce(-Vector3.up * 1800f);
         }
-        
+
     }
 
 
@@ -215,10 +227,16 @@ public class Drive : MonoBehaviour
         
     }
 
+
+    void OnCollisionEnter(Collision other)
+    {
+        //Debug.Log(other.collider.name);
+
+
+    }
+
+
+
+
 }
-
-
-
-
-
 
