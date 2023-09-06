@@ -23,6 +23,10 @@ public class Drive : MonoBehaviour
     public float speedMultiplier;
     public bool bisGrounded;
     public float turnAmount;
+    public float topSpeed; 
+    public float groundedGravity;
+    public float inAirGravity;
+
     float steeringAmount;
     RaycastHit hit;
 
@@ -149,7 +153,7 @@ public class Drive : MonoBehaviour
             float speed = Vector3.Dot(rb.transform.forward, rb.velocity);
 
             //I hate this, why does this work
-            float rawSpeed = Mathf.InverseLerp(-18, 18, speed);
+            float rawSpeed = Mathf.InverseLerp(-topSpeed, topSpeed, speed);
             float convertedSpeed = Mathf.Lerp(0, 1, rawSpeed);
 
             float clampedConvertedSpeed = Mathf.Clamp01(Mathf.Abs(convertedSpeed * 4));
@@ -182,7 +186,7 @@ public class Drive : MonoBehaviour
 
                 if(controlInput[1] > 0f)
                 {
-                    if(rb.velocity.magnitude >= 18)
+                    if(rb.velocity.magnitude >= topSpeed)
                         return;
 
 
@@ -214,12 +218,12 @@ public class Drive : MonoBehaviour
     {
         if(!bisGrounded)
         {
-            rb.AddForce(-Vector3.up * 2200f);
+            rb.AddForce(-Vector3.up * inAirGravity);
             
         }
         else
         {
-            rb.AddForce(-hit.normal * 1800f);
+            rb.AddForce(-hit.normal * groundedGravity);
         }
 
     }
