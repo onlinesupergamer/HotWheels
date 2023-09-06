@@ -31,6 +31,7 @@ public class Drive : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        //Application.targetFrameRate = 30; //This is for debugging only DO NOT ENABLE FOR SHIPPING
         
 
     }
