@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEditor.Rendering;
 using UnityEngine;
 
@@ -10,6 +11,9 @@ public class Drive : MonoBehaviour
     public Transform[] tires;
     public Transform[] frontTires;
     public Transform[] rearTires;
+    public AnimationCurve turningCurve;
+    public AnimationCurve speedCurve;
+    public AnimationCurve frictionCurve;
     public float rayDistance;
     public float springStrength;
     public float springDamper;
@@ -19,6 +23,7 @@ public class Drive : MonoBehaviour
     public float speedMultiplier;
     public bool bisGrounded;
     public float turnAmount;
+    float steeringAmount;
 
 
 
@@ -39,6 +44,7 @@ public class Drive : MonoBehaviour
         Friction();
         Steer();
         Accelerate();
+        
     }
 
     void Suspension()
@@ -72,6 +78,9 @@ public class Drive : MonoBehaviour
 
         }
 
+        
+        
+
     }
 
 
@@ -87,13 +96,25 @@ public class Drive : MonoBehaviour
             if(Physics.Raycast(tire.transform.position, -transform.up, out hit, rayDistance))
             {
                 Vector3 steeringDir = tire.transform.right;
-                Vector3 tireWorldVelocity= rb.GetPointVelocity(tire.transform.position);
+                Vector3 tireWorldVelocity = rb.GetPointVelocity(tire.transform.position);
+                float sideSpeed = Vector3.Dot(rb.transform.right, rb.velocity);
+                Mathf.Clamp01(sideSpeed);
+
+                float rawSpeed = Mathf.InverseLerp(-1, 1, sideSpeed);
+                float convertedSpeed = Mathf.Lerp(0, 1, rawSpeed);
+
+
+                float frictionValue = frictionCurve.Evaluate(convertedSpeed * 3);
+                
+
                 float steeringVelocity = Vector3.Dot(steeringDir, tireWorldVelocity);
                 float desiredVelocityChange = -steeringVelocity * tireGrip;
                 float desiredAcceleration = desiredVelocityChange / Time.fixedDeltaTime;
+                //Debug.Log(frictionValue);
+                
 
                 rb.AddForceAtPosition(steeringDir * tireMass * desiredAcceleration, tire.transform.position);
-
+                
             }
         }
     }
@@ -102,7 +123,26 @@ public class Drive : MonoBehaviour
     {
         foreach(Transform tire in frontTires)
         {
-            tire.localRotation = Quaternion.Euler(tire.transform.rotation.x, turnAmount * controlInput[0], tire.transform.rotation.z);
+            float wheelSpeed = Mathf.Abs(rb.velocity.magnitude);
+            float clampedSpeed = Mathf.Clamp01(Mathf.Abs(wheelSpeed));
+            float newSpeed = turningCurve.Evaluate(clampedSpeed);
+            float currentTurnAmount = turnAmount * newSpeed;
+
+            float speed = Vector3.Dot(rb.transform.forward, rb.velocity);
+
+            //I hate this, why does this work
+            float rawSpeed = Mathf.InverseLerp(-18, 18, speed);
+            float convertedSpeed = Mathf.Lerp(0, 1, rawSpeed);
+
+            float clampedConvertedSpeed = Mathf.Clamp01(Mathf.Abs(convertedSpeed * 3));
+            float affectedSteering = turningCurve.Evaluate(convertedSpeed);
+            
+            
+            
+
+            tire.localRotation = Quaternion.Euler(tire.transform.rotation.x, controlInput[0] * (affectedSteering * clampedConvertedSpeed) * turnAmount, tire.transform.rotation.z);
+            
+            
         }
 
         
@@ -110,7 +150,7 @@ public class Drive : MonoBehaviour
 
     void Accelerate()
     {
-        foreach(Transform tire in rearTires)
+        foreach(Transform tire in tires)
         {
             if(tire == null)
                 return;
@@ -124,6 +164,10 @@ public class Drive : MonoBehaviour
 
                 if(controlInput[1] > 0f)
                 {
+                    if(rb.velocity.magnitude >= 18)
+                        return;
+
+
                     float currentSpeed = Vector3.Dot(rb.transform.forward, rb.velocity);
                     float normalizedSpeed = Mathf.Clamp01(Mathf.Abs(currentSpeed) / 100); //This is divided by top speed;
 
@@ -132,6 +176,7 @@ public class Drive : MonoBehaviour
                     rb.AddForceAtPosition(accelerationDir * torque, tire.transform.position, ForceMode.Acceleration);
 
                 }
+
                 else if(controlInput[1] < 0)
                 {
                     float currentSpeed = Vector3.Dot(rb.transform.forward, rb.velocity);
@@ -145,6 +190,29 @@ public class Drive : MonoBehaviour
 
             }
         }
+    }
+
+    void Gravity()
+    {
+        if(!bisGrounded)
+        {
+
+        }
+        else
+        {
+
+        }
+        
+    }
+
+
+    void MovementBuffer(Vector3 currentMovement, Vector3 bufferedMovement)
+    {
+        Vector3 tmpbuffer;
+
+
+
+        
     }
 
 }

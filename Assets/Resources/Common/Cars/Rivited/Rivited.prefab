@@ -362,12 +362,69 @@ MonoBehaviour:
   rearTires:
   - {fileID: 1858095170681290003}
   - {fileID: 6510705909180602633}
+  turningCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.07380986
+      outSlope: -0.07380986
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.1358329
+    - serializedVersion: 3
+      time: 0.311431
+      value: 0.9815146
+      inSlope: -0.23845905
+      outSlope: -0.23845905
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.17571084
+    - serializedVersion: 3
+      time: 0.6272959
+      value: 0.70326596
+      inSlope: -2.461969
+      outSlope: -2.461969
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.23013481
+    - serializedVersion: 3
+      time: 0.80209255
+      value: 0.37783903
+      inSlope: -1.2987275
+      outSlope: -1.2987275
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.21401979
+      outWeight: 0.25325876
+    - serializedVersion: 3
+      time: 0.9986686
+      value: 0.2162163
+      inSlope: -0.26909095
+      outSlope: -0.26909095
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.2642761
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  speedCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   rayDistance: 0.45
-  springStrength: 2000
-  springDamper: 350
+  springStrength: 3000
+  springDamper: 200
   restDistance: 0.55
   tireGrip: 0.5
   tireMass: 5
-  speedMultiplier: 5
+  speedMultiplier: 2.5
   bisGrounded: 0
-  turnAmount: 35
+  turnAmount: 45
