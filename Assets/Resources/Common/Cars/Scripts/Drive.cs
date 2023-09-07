@@ -29,6 +29,7 @@ public class Drive : MonoBehaviour
 
     float steeringAmount;
     RaycastHit hit;
+    bool bIsBraking;
 
 
 
@@ -46,6 +47,21 @@ public class Drive : MonoBehaviour
         controlInput[0] = Input.GetAxisRaw("Horizontal");
         controlInput[1] = Input.GetAxisRaw("Vertical");
 
+        if(Input.GetKey(KeyCode.Space))
+        {
+            bIsBraking = true;
+        }
+        else
+        {
+            bIsBraking = false;
+        }
+
+        if(rb.velocity[0] <= 1f)
+        {
+            
+        }
+
+
         Gravity();
         Suspension();
         Friction();
@@ -61,8 +77,7 @@ public class Drive : MonoBehaviour
             if(tire == null)
                 return;
 
-
-            
+      
 
             if(Physics.Raycast(tire.transform.position, -transform.up, out hit, rayDistance))
             {
@@ -84,9 +99,6 @@ public class Drive : MonoBehaviour
                  Debug.DrawRay(tire.transform.position, -tire.up * rayDistance, Color.red);
 
         }
-
-        
-        
 
     }
 
@@ -121,14 +133,15 @@ public class Drive : MonoBehaviour
                 //This method seems scuffed, but it works
                 if(steeringVelocity < -3f)
                 {
-                    //Debug.Log("Sliding Right");
+                    //if(bIsBraking && controlInput[1] >= 0.2f)
+                        Drift(-3);
                 }
 
                 if(steeringVelocity > 3f)
                 {
-                    //Debug.Log("Sliding Left");
+                    //if(bIsBraking && controlInput[1] >= 0.2f)
+                        Drift(3);
                 }
-
 
 
                 float desiredAcceleration = desiredVelocityChange / Time.fixedDeltaTime;
@@ -159,16 +172,14 @@ public class Drive : MonoBehaviour
             float clampedConvertedSpeed = Mathf.Clamp01(Mathf.Abs(convertedSpeed * 4));
             float affectedSteering = turningCurve.Evaluate(convertedSpeed);
             
-            
-            
 
             tire.localRotation = Quaternion.Euler(tire.transform.rotation.x, controlInput[0] * (affectedSteering * clampedConvertedSpeed) * turnAmount, tire.transform.rotation.z);
             
             
         }
-
-        
+    
     }
+
 
     void Accelerate()
     {
@@ -176,8 +187,7 @@ public class Drive : MonoBehaviour
         {
             if(tire == null)
                 return;
-
-            
+                        
 
             if(Physics.Raycast(tire.transform.position, -transform.up, out hit, rayDistance))
             {
@@ -209,10 +219,39 @@ public class Drive : MonoBehaviour
                     rb.AddForceAtPosition(accelerationDir * torque, tire.transform.position, ForceMode.Acceleration);
 
                 }
+                
+
+                else if(controlInput[1] == 0)
+                {
+                    float currentSpeed = Vector3.Dot(rb.transform.forward, rb.velocity);
+                    rb.AddForceAtPosition(accelerationDir * -currentSpeed / 5, tire.transform.position, ForceMode.Acceleration);
+                }
 
             }
         }
     }
+
+
+    void Drift(float turnValue)
+    {
+
+        //We need to invert the drifting direction because physics suck
+
+        if(turnValue > 0)
+        {
+            Debug.Log("Drifting with " + turnValue);
+            rb.AddForce(rb.transform.right * 500);
+            //Left
+        }
+
+        if(turnValue < 0)
+        {
+            Debug.Log("Drifting with " + turnValue);
+            rb.AddForce(-rb.transform.right * 500);
+            //Right
+        }
+    }
+
 
     void Gravity()
     {
@@ -227,15 +266,16 @@ public class Drive : MonoBehaviour
         }
 
     }
+    void TakeOff()
+    {
+
+    }
 
 
     void MovementBuffer()
     {
+        
         Vector3 tmpbuffer = rb.velocity;
-
-
-
-
         
     }
 
@@ -246,7 +286,6 @@ public class Drive : MonoBehaviour
 
 
     }
-
 
 }
 
