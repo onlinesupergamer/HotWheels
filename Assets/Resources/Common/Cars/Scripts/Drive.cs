@@ -131,13 +131,13 @@ public class Drive : MonoBehaviour
 
 
                 //This method seems scuffed, but it works
-                if(steeringVelocity < -3f)
+                if(steeringVelocity < -5f && controlInput[0] > 0f && bIsBraking)
                 {
                     //if(bIsBraking && controlInput[1] >= 0.2f)
                         Drift(-3);
                 }
 
-                if(steeringVelocity > 3f)
+                if(steeringVelocity > 5f && controlInput[0] < 0f && bIsBraking)
                 {
                     //if(bIsBraking && controlInput[1] >= 0.2f)
                         Drift(3);
@@ -239,15 +239,15 @@ public class Drive : MonoBehaviour
 
         if(turnValue > 0)
         {
-            Debug.Log("Drifting with " + turnValue);
-            rb.AddForce(rb.transform.right * 500);
+            //Debug.Log("Drifting with " + turnValue);
+            rb.AddForce(rb.transform.right * 750);
             //Left
         }
 
         if(turnValue < 0)
         {
-            Debug.Log("Drifting with " + turnValue);
-            rb.AddForce(-rb.transform.right * 500);
+            //Debug.Log("Drifting with " + turnValue);
+            rb.AddForce(-rb.transform.right * 750);
             //Right
         }
     }
