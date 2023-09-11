@@ -26,7 +26,10 @@ public class Drive : MonoBehaviour
     public float topSpeed; 
     public float groundedGravity;
     public float inAirGravity;
+   
 
+
+    CollisionData collisionData;
     float steeringAmount;
     RaycastHit hit;
     bool bIsBraking;
@@ -67,6 +70,8 @@ public class Drive : MonoBehaviour
         Friction();
         Steer();
         Accelerate();
+
+    
         
     }
 
@@ -133,13 +138,13 @@ public class Drive : MonoBehaviour
                 //This method seems scuffed, but it works
                 if(steeringVelocity < -5f && controlInput[0] > 0f && bIsBraking)
                 {
-                    //if(bIsBraking && controlInput[1] >= 0.2f)
+                    
                         Drift(-3);
                 }
 
                 if(steeringVelocity > 5f && controlInput[0] < 0f && bIsBraking)
                 {
-                    //if(bIsBraking && controlInput[1] >= 0.2f)
+                    
                         Drift(3);
                 }
 
@@ -183,10 +188,14 @@ public class Drive : MonoBehaviour
 
     void Accelerate()
     {
+        
+
         foreach(Transform tire in tires)
         {
             if(tire == null)
                 return;
+
+           
                         
 
             if(Physics.Raycast(tire.transform.position, -transform.up, out hit, rayDistance))
@@ -240,14 +249,14 @@ public class Drive : MonoBehaviour
         if(turnValue > 0)
         {
             //Debug.Log("Drifting with " + turnValue);
-            rb.AddForce(rb.transform.right * 750);
+            rb.AddForce(rb.transform.right * 500);
             //Left
         }
 
         if(turnValue < 0)
         {
             //Debug.Log("Drifting with " + turnValue);
-            rb.AddForce(-rb.transform.right * 750);
+            rb.AddForce(-rb.transform.right * 500);
             //Right
         }
     }
@@ -266,10 +275,6 @@ public class Drive : MonoBehaviour
         }
 
     }
-    void TakeOff()
-    {
-
-    }
 
 
     void MovementBuffer()
@@ -282,10 +287,27 @@ public class Drive : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        //Debug.Log(other.collider.name);
+        
+        collisionData.rb = this.rb;
+        collisionData.other = other.rigidbody;
+        collisionData.position = other.GetContact(0).point;
+        collisionData.normal = other.GetContact(0).normal;
 
+        HandleCollisions();
 
     }
+
+    void HandleCollisions()
+    {
+        rb.AddForceAtPosition(collisionData.normal * -collisionData.rb.velocity.magnitude, collisionData.position);
+    }
+
+    void OnCollisionExit()
+    {   
+        collisionData.Reset();
+
+    }
+    
 
 }
 
